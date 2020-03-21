@@ -3,9 +3,19 @@ import ReactDOM from 'react-dom'
 
 const Button = ({ handleClick, text }) => <button onClick={handleClick}>{text}</button>;
 
+const Anecdote = ({ header, text, votes }) => (
+  <div>
+    <h1>{header}</h1>
+    <div>{text}</div>
+    <div>has {votes} votes</div>
+  </div>
+
+);
+
 const App = (props) => {
   const [selected, setSelected] = useState(0);
   const [points, setPoints] = useState(Array(6).fill(0));
+  const mostVoted = points.indexOf(Math.max(...points));
 
   const nextAnecdote = () => {
     setSelected(Math.floor(Math.random() * 6));
@@ -18,12 +28,10 @@ const App = (props) => {
 
   return (
     <div>
-      <div>
-        {props.anecdotes[selected]}
-        <div>has {points[selected]} votes</div>
-      </div>
+      <Anecdote header="Anecdote of the day" text={props.anecdotes[selected]} votes={points[selected]} />
       <Button handleClick={vote} text="vote" />
       <Button handleClick={nextAnecdote} text="next anecdote" />
+      <Anecdote header="Anecdote with most votes" text={props.anecdotes[mostVoted]} votes={points[mostVoted]} />
     </div>
   )
 }
