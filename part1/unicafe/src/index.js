@@ -5,6 +5,14 @@ const Header = () => <h1>give feedback</h1>;
 const Button = ({ handleClick, text }) => <button onClick={handleClick}>{text}</button>;
 const Statistics = ({ good, neutral, bad }) => {
   const all = good + neutral + bad;
+
+  if (!all) return (
+    <div>
+      <h2>statistics</h2>
+      <p>No feedback given</p>
+    </div>
+  );
+
   const average = (good + -bad) / all;
   const positive = good * 100 / all;
 
